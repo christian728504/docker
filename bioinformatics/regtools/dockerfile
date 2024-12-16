@@ -141,6 +141,9 @@ RUN for i in wigToBigWig bedGraphToBigWig liftOver bigBedToBed bigWigToBedGraph;
 # Add samtools binary to path
 ENV PATH="/usr/bin/samtools/bin:${PATH}"
 
+# Add regtools bbary to path
+ENV PATH="/opt/regtools/build/:${PATH}"
+
 # Add top level directories to mount on host system
 RUN mkdir /zata /data
 
