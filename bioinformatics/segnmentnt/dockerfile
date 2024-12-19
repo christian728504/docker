@@ -102,6 +102,13 @@ RUN pip install --no-cache-dir --ignore-installed \
     axial-positional-embedding \
     sinkhorn-transformer
 
+# Install nucelotide-transformer
+WORKDIR /opt
+
+RUN git clone https://github.com/instadeepai/nucleotide-transformer .
+
+RUN pip install --no-cache-dir .
+
 # Install meme
 RUN mkdir /opt/meme
 
