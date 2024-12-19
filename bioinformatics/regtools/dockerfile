@@ -93,7 +93,13 @@ RUN pip install --no-cache-dir --ignore-installed \
     icecream \
     cyvcf2 \
     pybedtools \
-    multiqc
+    multiqc \
+    PyVCF3 \
+    pyensembl \
+    torch \
+    torchvision \
+    axial-positional-embedding \
+    sinkhorn-transformer
 
 # Install meme
 RUN mkdir /opt/meme
@@ -142,7 +148,7 @@ RUN for i in wigToBigWig bedGraphToBigWig liftOver bigBedToBed bigWigToBedGraph;
 ENV PATH="/usr/bin/samtools/bin:${PATH}"
 
 # Add regtools bbary to path
-ENV PATH="/opt/regtools/build/:${PATH}"
+ENV PATH="/opt/regtools/build:${PATH}"
 
 # Add top level directories to mount on host system
 RUN mkdir /zata /data
