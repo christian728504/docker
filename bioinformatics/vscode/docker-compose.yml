@@ -1,0 +1,43 @@
+services:
+  code-server:
+    build: .
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="America/New_York"
+      - DEFAULT_WORKSPACE=/data
+    volumes:
+      - ./config:/config
+      - /data:/data
+      - /zata:/zata
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+
+services:
+  code-server:
+    build: .
+    container_name: bioinformatics:vscode
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="America/New_York"
+      - DEFAULT_WORKSPACE=/data
+    volumes:
+      - ./config:/config
+      - /data:/data
+      - /zata:/zata
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TOKEN}
+    restart: unless-stopped
+    depends_on:
+      - code-server

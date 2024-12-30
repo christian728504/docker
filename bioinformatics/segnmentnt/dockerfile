@@ -101,6 +101,7 @@ RUN pip install --no-cache-dir --ignore-installed \
     axial-positional-embedding \
     sinkhorn-transformer \
     "jax[cuda12_pip]" \
+    transformers \
     git+https://github.com/instadeepai/nucleotide-transformer@main
 
 # Install meme

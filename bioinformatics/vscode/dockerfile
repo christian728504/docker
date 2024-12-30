@@ -6,7 +6,9 @@ RUN apt-get update && apt-get install -y \
     bedtools \
     wget \
     libncurses5-dev \
-    poetry-python3
+    libbz2-dev \
+    liblzma-dev \
+    python3-poetry
 
 # Install samtools (since it's commonly needed with bedtools)
 RUN cd /usr/bin && \

@@ -1,14 +1,11 @@
 FROM quay.io/biocontainers/kallisto:0.44.0--h7d86c95_2
 
-# Install Python packages
-RUN pip install --no-cache-dir \
-    how-are-we-stranded-here \
-    RSeQC
+# Install git and build essentials
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
-WORKDIR /data
-
-# Verify installations
-RUN kallisto version && \
-    python -c "import how_are_we_stranded_here" && \
-    infer_experiment.py --help
+# Clone repository and install
+RUN git clone https://github.com/signalbash/how_are_we_stranded_here.git && \
+    cd how_are_we_stranded_here && \
+    pip install .
