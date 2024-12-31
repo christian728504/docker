@@ -1,13 +1,17 @@
 services:
   code-server:
-    # build: .
-    image: clarity001/bioinformatics:code-server
+    build: .
     container_name: code-server
+    # must configure .env file with password vairables before running
     environment:
       - TZ="America/New_York"
+      - PASSWORD=${WEBGUI_PASSWORD}
+      - SUDO_PASSWORD=${SUDOER_PASSWORD}
       - DEFAULT_WORKSPACE=/config/data
     volumes:
       - ~/.config/code-server/config:/config
       - /zata/data/zlab/zusers/ramirezc:/config/data
       - /zata/zippy/ramirezc:/config/zata
+    ports:
+      - 8443:8443
     restart: unless-stopped

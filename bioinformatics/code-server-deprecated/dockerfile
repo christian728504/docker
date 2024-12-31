@@ -136,18 +136,22 @@ RUN for i in wigToBigWig bedGraphToBigWig liftOver bigBedToBed bigWigToBedGraph;
 # Add samtools binary to path
 ENV PATH="/usr/bin/samtools/bin:${PATH}"
 
+# Install code-server
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+
 # Create workspace directory
 RUN mkdir -p /config/data && mkdir -p /config/zata
-
-# Install vscode CLI
-RUN curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz && \
-    tar -xf vscode_cli.tar.gz && \
-    mv code /usr/local/bin/ && \
-    rm vscode_cli.tar.gz
 
 # Set work directory
 WORKDIR /config
 
+# Expose the default code-server port
+EXPOSE 8443
+
+# Configure code-server to listen on all interfaces
+ENV BIND_ADDR=0.0.0.0:8443
+
 # Start code-server
-CMD ["code", "tunnel", "--accept-server-license-terms", "--no-sleep", "--server-data-dir", "/config/.vscode", "--extensions-dir", "/config/.vscode-extensions"]
+CMD ["code-server", "--bind-addr", "0.0.0.0:8443", "--user-data-dir", "/config/.vscode", "--extensions-dir", "/config/.vscode-extensions", "/config/data"]
+
 

@@ -1,7 +1,7 @@
 services:
   code-server:
-    # build: .
-    image: clarity001/bioinformatics:code-server
+    build: .
+    # image: clarity001/bioinformatics:code-server-gpu
     container_name: code-server
     environment:
       - TZ="America/New_York"
@@ -10,4 +10,14 @@ services:
       - ~/.config/code-server/config:/config
       - /zata/data/zlab/zusers/ramirezc:/config/data
       - /zata/zippy/ramirezc:/config/zata
+    ports:
+      - 8443:8443
     restart: unless-stopped
+    # must have NVIDIA Container Toolkit installed
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

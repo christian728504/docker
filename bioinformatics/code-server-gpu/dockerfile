@@ -1,5 +1,5 @@
 # Use an Ubuntu base image for compatibility
-FROM ubuntu:22.04
+FROM nvidia/cuda:12.3.1-devel-ubuntu22.04
 
 # Prevent interactive prompts during build
 ENV DEBIAN_FRONTEND=noninteractive
@@ -135,9 +135,6 @@ RUN for i in wigToBigWig bedGraphToBigWig liftOver bigBedToBed bigWigToBedGraph;
 
 # Add samtools binary to path
 ENV PATH="/usr/bin/samtools/bin:${PATH}"
-
-# Create workspace directory
-RUN mkdir -p /config/data && mkdir -p /config/zata
 
 # Install vscode CLI
 RUN curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz && \
