@@ -4,16 +4,48 @@ FROM ubuntu:22.04
 # Prevent interactive prompts during build
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install required dependencies
-RUN apt-get update && apt-get install -y \
+# Install system packages
+RUN apt update && apt install -y \
     curl \
+    gpg \
     git \
-    python3 python3-pip python3-dev \
-    libncurses-dev libbz2-dev liblzma-dev \
     vim \
     wget \
-    bedtools \
-    && rm -rf /var/lib/apt/lists/*
+    cmake \
+    bedtools
+
+# Install R
+RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/r-project.gpg
+
+RUN echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | tee -a /etc/apt/sources.list.d/r-project.list
+
+# Install system libraries
+RUN apt update && apt install -y \
+    python3 python3-pip python3-dev \
+    r-base \
+    libncurses-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libgmp-dev \
+    libmpfr-dev \
+    libcurl4-openssl-dev \
+    libxml2-dev \
+    libssl-dev \
+    libfontconfig1-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libcairo2-dev \
+    libxt-dev \
+    libgit2-dev \
+    libglpk-dev \
+    libgsl-dev \
+    libhdf5-dev \
+    libudunits2-dev \
+    libgdal-dev
 
 # Install python packages
 RUN pip install --upgrade pip && pip install --no-cache-dir "jupyterlab>=4.1.0"
@@ -102,6 +134,17 @@ RUN pip install --no-cache-dir --ignore-installed \
 
 # Install bash kernel
 RUN python3 -m bash_kernel.install
+
+# Intall R packages
+RUN R -e "options(warn=2); install.packages(c('tidyverse', 'ape', 'phylotools', 'ggsci', 'ggstatsplot', 'gganimate', 'ggthemes', 'ggrepel', 'ggforce', 'cowplot', 'shiny', 'BiocManager', 'tidytree', 'data.table', 'scales', 'DT', 'pheatmap', 'ggwordcloud', 'wordcloud', 'wordcloud2', 'microplot', 'rmeta', 'plotly', 'devtools', 'ggstar', 'ggnewscale', 'ggalluvial', 'TDbook', 'aplot', 'patchwork', 'igraph', 'ggraph', 'R.utils', 'ggpubr', 'UpSetR', 'ComplexUpset', 'ggVennDiagram', 'IRkernel'))"
+
+RUN R -e "options(warn=2); IRkernel::installspec(user=F)"
+
+RUN R -e "BiocManager::install(c('treeio', 'DESeq2', 'edgeR', 'org.Mm.eg.db', 'org.Hs.eg.db', 'org.Dm.eg.db', 'org.Ce.eg.db', 'BSgenome.Hsapiens.UCSC.hg38', 'BSgenome.Mmusculus.UCSC.mm10', 'DEXSeq', 'phyloseq', 'dada2'))"
+
+RUN R -e 'options(warn=2); devtools::install_github("omarwagih/ggseqlogo")'
+
+RUN R -e "options(warn=2); devtools::install_github('ianmoran11/mmtable2')"
 
 # Install meme
 RUN mkdir /opt/meme

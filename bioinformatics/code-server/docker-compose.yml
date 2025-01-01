@@ -8,6 +8,6 @@ services:
       - DEFAULT_WORKSPACE=/config/data
     volumes:
       - ~/.config/code-server/config:/config
-      - /zata/data/zlab/zusers/ramirezc:/config/data
-      - /zata/zippy/ramirezc:/config/zata
+      - /zata/data/zlab/zusers/$USER:/config/data
+      - /zata/zippy/$USER:/config/zata
     restart: unless-stopped
