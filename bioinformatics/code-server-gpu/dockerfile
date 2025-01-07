@@ -192,18 +192,12 @@ ENV PATH="/usr/bin/samtools/bin:${PATH}"
 RUN for i in wigToBigWig bedGraphToBigWig liftOver bigBedToBed bigWigToBedGraph; do \
      wget -q http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/$i -O /bin/$i ; chmod +x /bin/$i ; done
 
-# Create workspace directory
-RUN mkdir -p /config/data && mkdir -p /config/zata
-
 # Install vscode CLI
 RUN curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz && \
     tar -xf vscode_cli.tar.gz && \
     mv code /usr/local/bin/ && \
     rm vscode_cli.tar.gz
 
-# Set work directory
-WORKDIR /config
-
 # Start code-server
-CMD ["code", "tunnel", "--accept-server-license-terms", "--no-sleep", "--server-data-dir", "/config/.vscode", "--extensions-dir", "/config/.vscode-extensions"]
+CMD ["code", "tunnel", "--accept-server-license-terms", "--no-sleep", "--server-data-dir", "$HOME/.config/code-server/.vscode", "--extensions-dir", "$HOME/.config/code-server/.vscode-extensions"]
 
