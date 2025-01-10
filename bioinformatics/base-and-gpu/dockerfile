@@ -1,5 +1,5 @@
 # Base image with CUDA support
-FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu22.04 as base
+FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu22.04
 
 # Prevent interactive prompts during build
 ENV DEBIAN_FRONTEND=noninteractive
@@ -153,6 +153,3 @@ ENV PATH="/opt/regtools/build:${PATH}"
 
 # Mount points
 RUN mkdir -p /data /zata
-
-# Run jupyter lab (LSF noninteractive job submission)
-CMD bsub -q gpu -gpu "num=1:gmodel=TeslaV100_SXM2_32GB" -W 43200 -n 10 -R "rusage[mem=16000]" -R "span[hosts=1]" "jupyter lab --ip 0.0.0.0 --port 8787 --no-browser"

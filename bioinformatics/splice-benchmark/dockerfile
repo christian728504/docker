@@ -1,5 +1,5 @@
 # Development image
-FROM base as development
+FROM clarity001/bioinformatics:base-and-gpu
 
 # Install additional Python packages for development
 RUN pip install --no-cache-dir \
@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir \
     axial-positional-embedding \
     sinkhorn-transformer \
     transformers \
-    spliceai \
+    spliceai
 
 # Install specialized packages
 RUN pip install --no-cache-dir \
