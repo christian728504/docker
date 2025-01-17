@@ -98,6 +98,7 @@ RUN pip install --upgrade pip && pip install --no-cache-dir \
     torchvision \
     "jax[cuda12_pip]" \
     # Dev tools
+    pickle \
     black \
     isort \
     tqdm \
