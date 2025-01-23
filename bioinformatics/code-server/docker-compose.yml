@@ -5,9 +5,8 @@ services:
     container_name: code-server
     environment:
       - TZ="America/New_York"
-      - DEFAULT_WORKSPACE=/config/data
+      - DEFAULT_WORKSPACE=/home/dev
     volumes:
-      - ~/.config/code-server/config:/config
-      - /zata/data/zlab/zusers/$USER:/config/data
-      - /zata/zippy/$USER:/config/zata
+      - /zata/data/zlab/zusers/$USER:/home/dev/data
+      - /zata/zippy/$USER:/home/dev/zata
     restart: unless-stopped
