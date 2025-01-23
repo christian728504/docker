@@ -6,11 +6,8 @@ RUN curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alp
     tar -xf vscode_cli.tar.gz && \
     mv code /usr/local/bin/ && \
     rm vscode_cli.tar.gz && \
-    mkdir -p /home/dev/data && \
-    mkdir -p /home/dev/zata
-
-# Set work directory
-WORKDIR /home/dev
+    mkdir -p /data && \
+    mkdir -p /zata
 
 # Start code-server
-CMD ["/bin/bash", "-c", "code tunnel --accept-server-license-terms --no-sleep --name $HOSTNAME"]
+CMD ["/bin/bash", "-c", "code tunnel --accept-server-license-terms --no-sleep --name z014"]
