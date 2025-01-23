@@ -1,0 +1,14 @@
+FROM clarity001/bioinformatics:splice-benchmark-rocm
+
+# Install vscode CLI
+RUN curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz && \
+    tar -xf vscode_cli.tar.gz && \
+    mv code /usr/local/bin/ && \
+    rm vscode_cli.tar.gz && \
+    mkdir -p /home/config/vscode/vscode-extensions
+
+# Set work directory
+WORKDIR /home/dev
+
+# Start code-server
+CMD ["code", "tunnel", "--accept-server-license-terms", "--no-sleep", "--server-data-dir", "/home/.config/vscode", "--extensions-dir", "/home/.config/vscode/vscode-extensions"]

@@ -1,0 +1,1 @@
+You can change the base image of the docker-compose.yml file to whatever you want. However, for best compatibility, use one of the [rocm dev images](https://hub.docker.com/search?q=rocm%2Fdev) as your base image
