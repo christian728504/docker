@@ -7,7 +7,8 @@ RUN pip install --no-cache-dir \
     axial-positional-embedding \
     sinkhorn-transformer \
     transformers \
-    spliceai
+    spliceai \
+    gtfparse
 
 # Install specialized packages
 RUN pip install --no-cache-dir \

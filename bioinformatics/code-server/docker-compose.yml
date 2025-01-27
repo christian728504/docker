@@ -1,7 +1,7 @@
 services:
   code-server:
-    build: .
-      # image: clarity001/bioinformatics:code-server
+    # build: .
+    image: clarity001/bioinformatics:code-server
     working_dir: /data/zusers/$USER
     container_name: code-server
     environment:

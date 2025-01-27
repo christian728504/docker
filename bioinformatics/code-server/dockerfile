@@ -10,4 +10,4 @@ RUN curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alp
     mkdir -p /zata
 
 # Start code-server
-CMD ["/bin/bash", "-c", "code tunnel --accept-server-license-terms --no-sleep --name z014"]
+CMD ["/bin/bash", "-c", "code tunnel --accept-server-license-terms --no-sleep --name code-server"]
